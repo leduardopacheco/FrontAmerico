@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   getProdutosWithCategory,
   deleteProduto,
   updateProduto,
   createProduto,
   getCategorias,
+  getProdutos,
 } from "../api/api";
 import ProdutoEditForm from "./ProdutoEditForm";
 import Modal from "./Modal";
@@ -18,8 +19,10 @@ const ProdutoList = () => {
   // Função para buscar produtos e categorias
   const fetchProdutos = async () => {
     try {
-      const produtosData = await getProdutosWithCategory();
+      const produtosData = await getProdutos();
       setProdutos(produtosData);
+      console.log(produtosData);
+      
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
     }
@@ -29,6 +32,7 @@ const ProdutoList = () => {
     try {
       const categoriasData = await getCategorias();
       setCategorias(categoriasData);
+      
     } catch (error) {
       console.error("Erro ao buscar categorias:", error);
     }
@@ -85,7 +89,7 @@ const ProdutoList = () => {
             <p><strong>Descrição:</strong> {produto.descricao}</p>
             <p><strong>Preço:</strong> R$ {produto.preco}</p>
             <p>
-              <strong>Categoria:</strong> {produto.categoria_id} - {produto.categoria_descricao}
+              <strong>Categoria:</strong> {produto.categoria}
             </p>
             <div style={buttonContainerStyle}>
               <button onClick={() => handleEdit(produto)} style={editButtonStyle}>
